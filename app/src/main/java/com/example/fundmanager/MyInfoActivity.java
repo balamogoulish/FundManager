@@ -9,8 +9,6 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MyInfoActivity extends AppCompatActivity {
-    DBHelper helper;
-    SQLiteDatabase db;
     EditText updateName, updateAccount;
     String _id;
 
@@ -20,13 +18,8 @@ public class MyInfoActivity extends AppCompatActivity {
         _id = intent.getStringExtra("_id");
 
         setContentView(R.layout.activity_myinfo);
-        helper = new DBHelper(this);
-        try {
-            db = helper.getWritableDatabase();
-        } catch (SQLiteException ex) {
-            db = helper.getReadableDatabase();
-        }
         updateName = (EditText) findViewById(R.id.infonameEdit);
         updateAccount = (EditText) findViewById(R.id.infoaccountEdit);
     }
+
 }
