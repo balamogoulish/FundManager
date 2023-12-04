@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,9 +20,8 @@
         <activity android:name=".InOutActivity"/>
         <activity android:name=".MyInfoActivity"/>
         <activity android:name=".MenuActivity"/>
-        <activity android:name=".ShowFundActivity"/>
-        <activity android:name=".ManageMenuActivity"/>
-        <activity android:name=".ShowUserActivity"/>
+        <activity android:name=".CheckGainActivity"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

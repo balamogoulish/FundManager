@@ -1,7 +1,6 @@
 package com.example.fundmanager;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,16 +9,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class SignUpActivity extends AppCompatActivity {
-    EditText edit_id, edit_pw, edit_name, edit_account;
+    EditText edit_id, edit_pw, edit_name, edit_account, edit_pwCheck;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,73 +25,62 @@ public class SignUpActivity extends AppCompatActivity {
         edit_pw = findViewById(R.id.register_pw);
         edit_name = findViewById(R.id.register_name);
         edit_account = findViewById(R.id.register_account);
+        edit_pwCheck = findViewById(R.id.checkPw);
     }
 
     public void insert(View target) {
         // To do: check id, pw, name, account valid
         String id = edit_id.getText().toString();
         String pw = edit_pw.getText().toString();
+        String pwCheck = edit_pwCheck.getText().toString();
         String name = edit_name.getText().toString();
         String account = edit_account.getText().toString();
-
-        // Use AsyncTask or a background thread for network operations
-        new AsyncTask<String, Void, String>() {
-            @Override
-            protected String doInBackground(String... params) {
-                String url = "http://your_server/register.jsp";
-
-                try {
-                    URL serverUrl = new URL(url);
-                    HttpURLConnection httpURLConnection = (HttpURLConnection) serverUrl.openConnection();
-                    httpURLConnection.setRequestMethod("POST");
-                    httpURLConnection.setDoOutput(true);
-
-                    // Write data to the server
-                    OutputStream outputStream = new BufferedOutputStream(httpURLConnection.getOutputStream());
-                    String postData = "id=" + params[0] + "&pw=" + params[1] + "&name=" + params[2] + "&account=" + params[3];
-                    outputStream.write(postData.getBytes());
-                    outputStream.flush();
-                    outputStream.close();
-
-                    // Read response from the server
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-
-                    reader.close();
-                    httpURLConnection.disconnect();
-
-                    return response.toString();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return null;
+        String valid = signUpValidCheck(id, pw, pwCheck, name, account);
+        if(valid.equals("SUCCESS")){
+            try {
+                String result;
+                SignUpDBActivity task = new SignUpDBActivity();
+                result = task.execute(id, pw, name, account).get();
+                if(result.equals("SUCCESS")){
+                    edit_id.setText("");
+                    edit_pw.setText("");
+                    edit_name.setText("");
+                    edit_account.setText("");
+                    Toast.makeText(getApplicationContext(), "성공적으로 가입되었습니다!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            @Override
-            protected void onPostExecute(String result) {
-                handleInsertResult(result);
+            } catch (Exception e) {
+                Log.i("DBtest", ".....ERROR.....!");
+                Toast.makeText(getApplicationContext(), "DB 연결 에러 발생", Toast.LENGTH_SHORT).show();
             }
-        }.execute(id, pw, name, account);
+        } else{
+            Toast.makeText(getApplicationContext(), valid, Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void handleInsertResult(String result) {
-        if (result != null && result.equals("success")) {
-            Toast.makeText(getApplicationContext(), "Registered successfully", Toast.LENGTH_SHORT).show();
-            edit_id.setText("");
-            edit_pw.setText("");
-            edit_name.setText("");
-            edit_account.setText("");
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        } else {
-            Toast.makeText(getApplicationContext(), "Failed to register. Please try again", Toast.LENGTH_SHORT).show();
-            // You can log the exception for further analysis if needed
-            Log.e("Insert Error", "Error registering data on the server");
+    public String signUpValidCheck(String id, String pw, String check, String name, String account){
+        String response = "SUCCESS";
+        String pwPattern = "([0-9].*[!,@,#,^,&,*,(,)])|([!,@,#,^,&,*,(,)].*[0-9])";
+        Pattern pattern_pw = Pattern.compile(pwPattern);
+        Matcher matcher = pattern_pw.matcher(pw);
+
+        if(id.length() < 6 ||id.length() > 12){
+            response = "6-12자리의 아이디를 입력해주세요.";
+        } else if(!matcher.find()){
+            response = "숫자, 특수문자가 포함된 0-9자를 비밀번호로 입력해주세요.";
+        } else if(name.length() < 2){
+            response = "이름을 두 자 이상입력해주세요.";
+        } else if(account.length() == 0){
+            response = "계좌번호를 입력해주세요.";
+        } else if(pw.equals(check) != true){
+            response = "비밀번호가 일치하지 않습니다.";
+        } else if(account.length() == 0){
+            response = "계좌번호를 입력해주세요.";
         }
+        return response;
     }
 }

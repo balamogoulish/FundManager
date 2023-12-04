@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="40sp">
 
     <TextView
         android:id="@+id/myInfoTitleTxt"
@@ -11,100 +12,88 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:text="My Information"
-        android:textSize="48sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/infonameEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:hint="이름을 입력하세요"
-        android:inputType="text"
-        android:text="myname"
-        android:textAlignment="textEnd"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.465"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myInfoTitleTxt" />
 
     <TextView
         android:id="@+id/infonameTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="110dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="100dp"
         android:text="NAME"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/infonameEdit"
-        app:layout_constraintTop_toBottomOf="@+id/myInfoTitleTxt" />
-
-    <EditText
-        android:id="@+id/infoaccountEdit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="계좌번호를 입력하세요"
-        android:inputType="number"
-        android:text="myaccount"
-        android:textAlignment="textEnd"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.465"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infonameEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/myInfoTitleTxt" />
 
     <TextView
         android:id="@+id/infoaccountTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
         android:text="ACCOUNT"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/infoaccountEdit"
-        app:layout_constraintTop_toBottomOf="@+id/infonameEdit" />
-
-    <TextView
-        android:id="@+id/clientNumTitleTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="CLIENT NUMBER"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infoaccountEdit" />
-
-    <TextView
-        android:id="@+id/clientNumTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="2021440009"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clientNumTitleTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/infonameTxt" />
 
     <Button
         android:id="@+id/checkinfoBtn"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginBottom="100dp"
+        android:onClick="moveToMenu"
         android:text="확인"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/infoidTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="30dp"
+        android:text="ID"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoaccountTxt" />
+
+    <TextView
+        android:id="@+id/nameResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="30dp"
+        android:text="username"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myInfoTitleTxt" />
+
+    <TextView
+        android:id="@+id/accountResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="00000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameResult" />
+
+    <TextView
+        android:id="@+id/idResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="userID"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountResult" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
