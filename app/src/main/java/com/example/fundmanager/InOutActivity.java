@@ -37,23 +37,27 @@ public class InOutActivity extends AppCompatActivity {
     }
 
     public void getUserMoney(){ //user_index를 통해 user_money를 조회함
-//        try {
-//            String result;
-//            GetUserMoneyActivity task = new GetUserMoneyActivity();
-//            result = task.execute(user_index).get();
-//            if(result.equals("FAIL")){
-//                Toast.makeText(getApplicationContext(), "투자액을 불러오는데 실패했습니다...", Toast.LENGTH_SHORT).show();
-//
-//            } else { //user_money return
-//                user_money =  Integer.parseInt(result);
-//                Toast.makeText(getApplicationContext(), "투자액을 불러왔습니다!", Toast.LENGTH_SHORT).show();
-//                user_money_txt.setText(user_money);
-//            }
-//
-//        } catch (Exception e) {
-//            Log.i("DBtest", ".....ERROR.....!");
-//            Toast.makeText(getApplicationContext(), "DB 연결 에러 발생", Toast.LENGTH_SHORT).show();
-//        }
+        try {
+            String result;
+            GetUserMoneyDBActivity task = new GetUserMoneyDBActivity();
+            result = task.execute(user_index).get();
+            if(result.equals("FAIL")){
+                Toast.makeText(getApplicationContext(), "투자액을 불러오는데 실패했습니다...", Toast.LENGTH_SHORT).show();
+
+            } else { //user_money return
+                Toast.makeText(getApplicationContext(), "투자액을 불러왔습니다!", Toast.LENGTH_SHORT).show();
+                try {
+                    user_money = Integer.parseInt(result);
+                    user_money_txt.setText(result);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } catch (Exception e) {
+            Log.i("DBtest", ".....ERROR.....!");
+            Toast.makeText(getApplicationContext(), "DB 연결 에러 발생", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void inMoney(View view){
@@ -66,25 +70,27 @@ public class InOutActivity extends AppCompatActivity {
     }
     public void inOutHandle(int change) { //업데이트된 user_money를 가져외 출력함
         int user_money_update;
-        user_money_update = user_money + change;
-
         try {
             String result;
             InOutDBActivity task = new InOutDBActivity();
-            result = task.execute(String.valueOf(change)).get();
-            if(result.equals("FAIL")){
-                Toast.makeText(getApplicationContext(), "입/출금에 실패했습니다...", Toast.LENGTH_SHORT).show();
-
+            result = task.execute(user_index, String.valueOf(change)).get();
+            if(result.equals("SUCCESS")){
+                user_money_update = user_money + change;
+                if(user_money_update < 0){
+                    Toast.makeText(getApplicationContext(), "소지 금액보다 출금액이 더 큽니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "입/출금에 성공했습니다!", Toast.LENGTH_SHORT).show();
+                    user_money_txt.setText(String.valueOf(user_money_update));
+                    user_money = user_money_update;
+                }
             } else {
-                Toast.makeText(getApplicationContext(), "입/출금에 성공했습니다!", Toast.LENGTH_SHORT).show();
-                user_money_txt.setText(user_money_update);
+
+                Toast.makeText(getApplicationContext(), "입/출금에 실패했습니다...", Toast.LENGTH_SHORT).show();
             }
 
         } catch (Exception e) {
             Log.i("DBtest", ".....ERROR.....!");
         }
-
-
     }
 
 }

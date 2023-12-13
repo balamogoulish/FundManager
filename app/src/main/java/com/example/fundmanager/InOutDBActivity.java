@@ -19,7 +19,7 @@ public class InOutDBActivity extends AsyncTask<String, Void, String> {
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://10.0.75.225:8081/FundManager/DBServer/Login.jsp");
+            URL url = new URL("http://10.0.20.190:8081/FundManager/DBServer/InOutMoney.jsp");
             // http://ip주소:포트번호/이클립스프로젝트명/WebContent아래폴더/androidDB.jsp
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -28,7 +28,7 @@ public class InOutDBActivity extends AsyncTask<String, Void, String> {
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
 
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg = "inout_money=" + strings[0];
+            sendMsg = "user_index=" + strings[0] + "&inout_money=" + strings[1];
 
             osw.write(sendMsg);
             osw.flush();

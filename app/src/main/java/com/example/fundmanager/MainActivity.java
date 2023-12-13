@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     user_index = result;
                     Toast.makeText(getApplicationContext(), "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), user_index, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                     intent.putExtra("user_index", user_index);
                     startActivity(intent);
