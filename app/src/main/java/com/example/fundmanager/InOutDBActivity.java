@@ -12,6 +12,8 @@ import java.net.URL;
 
 public class InOutDBActivity extends AsyncTask<String, Void, String> {
     String sendMsg, receiveMsg;
+    String ipAddr = ((MainActivity)MainActivity.context_main).var;
+
 
     @Override
     protected String doInBackground(String... strings) {
@@ -19,7 +21,7 @@ public class InOutDBActivity extends AsyncTask<String, Void, String> {
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://10.0.20.190:8081/FundManager/DBServer/InOutMoney.jsp");
+            URL url = new URL("http://"+ipAddr+":8081/FundManager/DBServer/InOutMoney.jsp");
             // http://ip주소:포트번호/이클립스프로젝트명/WebContent아래폴더/androidDB.jsp
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

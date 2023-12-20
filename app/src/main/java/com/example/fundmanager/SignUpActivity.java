@@ -64,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public String signUpValidCheck(String id, String pw, String check, String name, String account){
         String response = "SUCCESS";
-        String pwPattern = "([0-9].*[!,@,#,^,&,*,(,)])|([!,@,#,^,&,*,(,)].*[0-9])";
+        String pwPattern = "([0-9].*[!,@,#,^,*,(,)])|([!,@,#,^,*,(,)].*[0-9])";
         Pattern pattern_pw = Pattern.compile(pwPattern);
         Matcher matcher = pattern_pw.matcher(pw);
 

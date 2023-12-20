@@ -1,4 +1,5 @@
 package com.example.fundmanager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     EditText edit_id, edit_pw;
+    public static Context context_main;
+    public String var="10.0.20.233";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         edit_id = findViewById(R.id.idEdit);
         edit_pw = findViewById(R.id.pwEdit);
+
+        context_main = this;
     }
 
     public void search(View target) {
