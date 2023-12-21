@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class LoginDBActivity extends AsyncTask<String, Void, String> {
+public class DBActivity extends AsyncTask<String, Void, String> {
     String sendMsg, receiveMsg;
     String ipAddr = ((MainActivity)MainActivity.context_main).var;
     @Override
@@ -19,7 +19,7 @@ public class LoginDBActivity extends AsyncTask<String, Void, String> {
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://"+ipAddr+":8081/FundManager/DBServer/Login.jsp");
+            URL url = new URL("http://"+ipAddr+":8081/FundManager/DBServer/"+strings[1]);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -27,7 +27,7 @@ public class LoginDBActivity extends AsyncTask<String, Void, String> {
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
 
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg = "id=" + strings[0] + "&pw=" + strings[1];
+            sendMsg = strings[0];
 
             osw.write(sendMsg);
             osw.flush();

@@ -39,8 +39,9 @@ public class InOutActivity extends AppCompatActivity {
     public void getUserMoney(){ //user_index를 통해 user_money를 조회함
         try {
             String result;
-            GetUserMoneyDBActivity task = new GetUserMoneyDBActivity();
-            result = task.execute(user_index).get();
+            String sendMsg = "user_index=" + user_index;
+            DBActivity task = new DBActivity();
+            result = task.execute(sendMsg, "GetUserMoney.jsp").get();
             if(result.equals("FAIL")){
                 Toast.makeText(getApplicationContext(), "투자액을 불러오는데 실패했습니다...", Toast.LENGTH_SHORT).show();
 
@@ -62,20 +63,23 @@ public class InOutActivity extends AppCompatActivity {
 
     public void inMoney(View view){
         int inAmt = Integer.parseInt(inout_amount_txt.getText().toString());
-        inOutHandle(inAmt);
+        String change = String.valueOf(inAmt);
+        inOutHandle(change);
     }
     public void outMoney(View view){
         int outAmt = Integer.parseInt(inout_amount_txt.getText().toString());
-        inOutHandle(-outAmt);
+        String change = String.valueOf(-outAmt);
+        inOutHandle(change);
     }
-    public void inOutHandle(int change) { //업데이트된 user_money를 가져외 출력함
+    public void inOutHandle(String change) { //업데이트된 user_money를 가져외 출력함
         int user_money_update;
         try {
             String result;
-            InOutDBActivity task = new InOutDBActivity();
-            result = task.execute(user_index, String.valueOf(change)).get();
+            String sendMsg = "user_index=" + user_index + "&inout_money=" + change;
+            DBActivity task = new DBActivity();
+            result = task.execute(sendMsg, "InOutMoney.jsp").get();
             if(result.equals("SUCCESS")){
-                user_money_update = user_money + change;
+                user_money_update = user_money + Integer.parseInt(change);
                 if(user_money_update < 0){
                     Toast.makeText(getApplicationContext(), "소지 금액보다 출금액이 더 큽니다.", Toast.LENGTH_SHORT).show();
                 } else {

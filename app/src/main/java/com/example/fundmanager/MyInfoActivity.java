@@ -29,8 +29,9 @@ public class MyInfoActivity extends AppCompatActivity {
     public void showMyInfo(){
         String name_result, account_result, id_result;
         try {
-            MyInfoDBActivity task = new MyInfoDBActivity();
-            String results = task.execute(user_index).get();
+            DBActivity task = new DBActivity();
+            String sendMsg = "user_index=" + user_index;
+            String results = task.execute(sendMsg, "MyInfo.jsp").get();
             String result[] = results.split(",");
             if(result[0].equals("FAIL")){ //실패 시, FAIL 리턴
                 Toast.makeText(getApplicationContext(), "정보를 불러오는데 실패했습니다...", Toast.LENGTH_SHORT).show();

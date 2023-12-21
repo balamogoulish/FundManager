@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
         if(id.length() > 0 && pw.length() > 0){
             try {
                 String result;
-                LoginDBActivity task = new LoginDBActivity();
-                result = task.execute(id, pw).get();
+                DBActivity task = new DBActivity();
+                String sendMsg = "id=" + id + "&pw=" + pw;
+                result = task.execute(sendMsg, "Login.jsp").get();
                 if(result.equals("FAIL")){
                     edit_id.setText("");
                     edit_pw.setText("");

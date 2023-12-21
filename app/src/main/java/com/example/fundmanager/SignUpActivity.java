@@ -39,8 +39,9 @@ public class SignUpActivity extends AppCompatActivity {
         if(valid.equals("SUCCESS")){
             try {
                 String result;
-                SignUpDBActivity task = new SignUpDBActivity();
-                result = task.execute(id, pw, name, account).get();
+                String sendMsg = "id=" + id + "&pw=" + pw + "&name=" + name + "&account=" + account;
+                DBActivity task = new DBActivity();
+                result = task.execute(sendMsg,"SignUP.jsp").get();
                 if(result.equals("SUCCESS")){
                     edit_id.setText("");
                     edit_pw.setText("");

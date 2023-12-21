@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class CheckGainActivity extends AppCompatActivity {
     TextView title_txt, gain_txt, origin_txt;
-    String user_index;
+    String user_index, sendMsg;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,11 +23,14 @@ public class CheckGainActivity extends AppCompatActivity {
         title_txt = findViewById(R.id.checkTypeTxt);
         gain_txt = findViewById(R.id.gainResult);
         origin_txt = findViewById(R.id.totalResult);
+
+        sendMsg = "user_index=" + user_index;
     }
     public void checkUser(View target) {
         try {
-            CheckUserDBActivity task = new CheckUserDBActivity();
-            String results = task.execute(user_index).get();
+            DBActivity task = new DBActivity();
+
+            String results = task.execute(sendMsg, "CheckUser.jsp").get();
             String result[] = results.split(",");
             if(result[0].equals("FAIL")){ //실패 시, FAIL 리턴
                 Toast.makeText(getApplicationContext(), "조회에 실패했습니다...", Toast.LENGTH_SHORT).show();
@@ -48,8 +51,8 @@ public class CheckGainActivity extends AppCompatActivity {
 
     public void checkFund(View target) {
         try {
-            CheckFundDBActivity task = new CheckFundDBActivity();
-            String results = task.execute(user_index).get();
+            DBActivity task = new DBActivity();
+            String results = task.execute(sendMsg, "CheckFund.jsp").get();
             String result[] = results.split(",");
             if(result[0].equals("FAIL")){ //실패 시, FAIL 리턴
                 Toast.makeText(getApplicationContext(), "조회에 실패했습니다...", Toast.LENGTH_SHORT).show();
